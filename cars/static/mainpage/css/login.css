@@ -1,0 +1,210 @@
+
+
+#mask {
+    background: #000;
+    opacity: 0.75;
+    filter: alpha(opacity=75);
+    height: 1000px;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 2;
+}
+
+#login {
+
+    position: fixed;
+    left: 200px;
+    top: 200px;
+    z-index: 3;
+    font-family: myFont;
+
+}
+
+.loginCon {
+    width: 600px;
+    height: 380px;
+    background: #ffc;
+    position: relative;
+    opacity: 0.75;
+    filter: alpha(opacity=75);
+
+}
+
+#Hlog {
+    position: absolute;
+    width: 600px;
+    height: 50px;
+    top: 0;
+    background: #0fc;
+    font-size: 30px;
+}
+
+#close {
+    width: 30px;
+    height: 30px;
+    background-image: url("./close.png");
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    z-index: 4;
+}
+
+#name {
+    position: absolute;
+    top: 80px;
+    left: 30px;
+
+}
+
+#count {
+    position: absolute;
+    top: 120px;
+    left: 80px;
+    visibility: hidden;
+}
+
+#pwd {
+    position: absolute;
+    top: 140px;
+    left: 30px;
+
+}
+
+#strength {
+    position: absolute;
+    top: 190px;
+    left: 120px;
+
+}
+
+#pwd2 {
+    position: absolute;
+    top: 220px;
+    left: 30px;
+
+}
+
+#check {
+    position: absolute;
+    top: 260px;
+    left: 30px;
+
+}
+
+#register {
+    position: absolute;
+    top: 320px;
+    left: 50px;
+    border-shadow: 4px 2px 6px #333;
+    border-radius: 5px;
+}
+
+#register input, #recall input {
+    font-family: myFont;
+
+}
+
+#recall {
+    position: absolute;
+    top: 320px;
+    left: 100px;
+    border-shadow: 4px 2px 6px #333;
+    border-radius: 5px;
+}
+
+#name p, #pwd p {
+
+    display: none;
+}
+
+#pwd2 p {
+
+    display: none;
+    font-size: 12px;
+}
+
+#strength em {
+
+    font-size: 16px;
+
+}
+
+.inactive {
+
+    font-size: 18px;
+
+}
+
+.active {
+
+    background: #ff3;
+
+}
+
+i {
+
+    display: inline-block;
+}
+
+.err {
+    background: red;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+
+}
+
+.ok {
+    background: green;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+
+}
+
+.ati {
+    background: yellow;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+
+}
+
+#log_name {
+
+    position: absolute;
+    top: 120px;
+    left: 70px;
+
+}
+
+#log_pwd {
+    position: absolute;
+    top: 200px;
+    left: 70px;
+
+}
+
+#log {
+
+    position: absolute;
+    top: 300px;
+    left: 100px;
+
+}
+
+#log_recall {
+
+    position: absolute;
+    top: 300px;
+    left: 200px;
+
+}
+
+#log input, #log_recall input {
+
+    font-family: myFont;
+}
+

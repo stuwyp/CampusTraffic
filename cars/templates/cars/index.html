@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>汕头大学交通管理系统</title>
+
+    {% load staticfiles %}
+
+    <link rel="stylesheet" type="text/css" href="{% static 'mainpage/css/index.css' %}">
+    <script src="{% static 'mainpage/js/jquery.js' %}"></script>
+    <script src="{% static 'mainpage/js/index.js' %}"></script>
+    <script src="{% static 'mainpage/js/topython.js' %}"></script>
+    <script src="{% static 'mainpage/js/move_structure.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'mainpage/css/login.css' %}">
+    <script src="{% static 'mainpage/js/login.js' %}"></script>
+    <script type="text/javascript"
+            src="http://api.map.baidu.com/api?v=2.0&ak=FIkQH7ofhuz1g9XwPM6llZf3OETY0iOk"></script>
+    <script src="{% static 'mainpage/js/baidumap.js' %}"></script>
+    {#    <script>#}
+    {#        var regBt = document.getElementById("registerbutton");#}
+    {#        regBt.style.display = "none";#}
+    {#    </script>#}
+
+</head>
+
+
+<body>
+{#<p class="head">汕头大学，欢迎你</p>#}
+
+
+<div id="main">
+
+    <div id="top" class="name">
+
+        <div id="stu">汕头大学交通管理系统</div>
+
+        <script>
+            $(function () {
+                //一开始直接隐藏菜单
+                $(".menuItem").hide();
+                //给标题添加点击事件
+                $("#username").click(function () {
+{#                    $(".menuItem").slideDown();#}
+                    if ($(".menuItem").is(':hidden')) {
+                        $(".menuItem").slideDown();
+                    }
+                    else {
+                        $(".menuItem").slideUp();
+                    }
+                });
+                $(".menuBt").mouseout(function () {
+                    setTimeout(function () {
+                        $(".menuItem").slideUp(500);
+                    }, 4000);
+
+                })
+
+            });
+        </script>
+
+        <div id="button">
+
+                <button id="registerbutton" class="button" onClick="location.href='/cars/register'">注册</button>
+            {% if username == '' %}
+                <button id="loginbutton"  class="button logoutBt" onClick="location.href='/cars/login'">登陆</button>
+            {% endif %}
+            {% if username != '' %}
+                <div class="button menuBt">
+                    <div id="username">{{ username }}</div>
+                    <div id="menu">
+                        <ul id="Item">
+{#                            <li class="menuItem">车辆信息</li>#}
+                            <li class="menuItem" onClick="location.href='/cars/dataView'">查看数据</li>
+                            <li class="menuItem" onClick="location.href='/cars/log_out'">退出登录</li>
+                            <li class="menuItem"></li>
+                        </ul>
+                    </div>
+                </div>
+            {% endif %}
+
+        </div>
+
+
+        {#                <div>{{ username }}</div>#}
+
+
+        {#            <span></span>#}
+
+    </div>
+
+
+    <div id="image">
+        <img id="img1" src="{% static 'mainpage/images/bell.jpg' %}" alt="the Bell " width=540px height=300px/>
+        <img id="img2" src="{% static 'mainpage/images/flower.jpg' %}" alt="the Flower " width=540px height=300px/>
+        <img id="img3" src="{% static 'mainpage/images/library.jpg' %}" alt="the library " width=540px height=300px/>
+        <img id="img4" src="{% static 'mainpage/images/pool.jpg' %}" alt="the pool " width=540px height=300px/>
+    </div>
+</div>
+
+
+<div id="container"></div>
+<script src="{% static 'mainpage/js/baidumap.js' %}"></script>
+
+
+<div id="index_bottom">
+    <hr style="border:dotted"/>
+    <div><a href="https://www.stu.edu.cn/" target="_blank">汕头大学</a>
+        <a href="#">关于我们</a></div>
+</div>
+
+</body>
+</html>

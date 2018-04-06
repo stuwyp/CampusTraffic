@@ -1,0 +1,76 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: rgba(251, 251, 251, 0.97);
+}
+
+#wrap {
+    position: relative;
+}
+
+.menu {
+    height: 40px;
+}
+
+#allCars {
+    margin-left: 3%;
+    text-align: left;
+    font-size: 18px;
+    display: inline-block;
+}
+
+#car {
+    margin-left: 3%;
+    text-align: left;
+    font-size: 18px;
+    display: none;
+}
+
+#search {
+    font-size: 18px;
+    padding: 1.5% 10%;
+    border-bottom: 1px;
+    background-color: rgba(246, 246, 246, 0.96);
+}
+
+#year {
+    margin: 0 2.5%;
+    display: inline-block;
+}
+
+#month {
+    margin: 0 2.5%;
+    display: inline-block;
+}
+
+#selYear, #selMonth {
+    width: 96px;
+    height: 32px;
+    font-size: 16px;
+}
+
+.Bt {
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    align-self: center;
+    outline: none;
+    height: 30px;
+    width: 72px;
+    margin: 0 10px;
+}
+
+#carID {
+    margin-left: 20px;
+    margin-right: 10px;
+    width: 150px;
+    height: 24px;
+
+}
+
+#returnBt {
+    float: right;
+}

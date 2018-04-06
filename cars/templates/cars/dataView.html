@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>汕头大学交通管理系统</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'mainpage/css/dataView.css' %}">
+    <script src="{% static 'mainpage/js/jquery.js' %}"></script>
+    <script src="{% static 'mainpage/js/highcharts.js' %}"></script>
+</head>
+<body onload="judge()">
+
+
+<div id="wrap">
+
+    <div id="search">
+
+        <span id="year" class="menu">年份
+        <label for="sel">
+                    <select id="selYear" onchange="">
+                            <option value="2015" name="year">2015年</option>
+                            <option value="2016" name="year">2016年</option>
+                            <option value="2017" name="year">2017年</option>
+                    </select>
+                </label>
+        </span>
+        <span id="month" class="menu">月份
+        <label for="sel">
+                    <select id="selMonth" onchange="">
+                            <option value="0" name="month">全年</option>
+                            <option value="1" name="month">1月</option>
+                            <option value="2" name="month">2月</option>
+                            <option value="3" name="month">3月</option>
+                            <option value="4" name="month">4月</option>
+                            <option value="5" name="month">5月</option>
+                            <option value="6" name="month">6月</option>
+                            <option value="7" name="month">7月</option>
+                            <option value="8" name="month">8月</option>
+                            <option value="9" name="month">9月</option>
+                            <option value="10" name="month">10月</option>
+                            <option value="11" name="month">11月</option>
+                            <option value="12" name="month">12月</option>
+                    </select>
+                </label>
+        </span>
+        <span id="allCars" class="menu">
+        总出入量
+        <button class="Bt" id="allBt" onclick="getMessage(0)">点击查询</button>
+        </span>
+        <span id="car" class="menu">
+        车辆出入量
+        <input type="text" id="carID" placeholder="请输入查询车牌号">
+        <button class="Bt" onclick="getMessage(1)">点击查询</button>
+        </span>
+        <span>
+        <button class="Bt" id="returnBt" onclick="(function() {
+          location.href='http://127.0.0.1:8000/cars';
+        })()">返回主界面</button>
+        </span>
+    </div>
+
+
+    <script>
+        isStaff = {{ isStaff | safe }};
+        {#        isStaff区分用户和管理员#}
+
+        function judge() {
+            if (isStaff) {
+                $("#car").css("display", "inline-block");
+            }
+            else {
+
+            }
+
+            var date = new Date;
+            var year = date.getFullYear();
+            var setupYear = 2017;
+            while (year - setupYear++ > 0) {
+                var opt = new Option(String(setupYear) + '年', String(setupYear));
+                opt.name = 'year';
+                document.getElementById("selYear").options.add(opt);
+            }
+            var yearSelect = document.getElementById("selYear");
+            var options = yearSelect.options;
+            for (var i = 0; i < options.length; i++) {
+                if (options[i].value == year) {
+                    options[i].defaultSelected = true;
+                    options[i].selected = true;
+                }
+            }
+        }
+
+        function getMessage(isInputQuery) {
+
+
+            var yearSelect = document.getElementById("selYear");
+            var myYear = yearSelect.options[yearSelect.selectedIndex].value;
+            var monthSelect = document.getElementById("selMonth");
+            var myMonth = monthSelect.options[monthSelect.selectedIndex].value;    // option 对应value值
+            var carID = $("#carID").val();
+            if (isStaff && isInputQuery && carID === "") {
+                alert("请输入查询车牌号");
+                return 0;
+            }
+            console.log(myYear, myMonth, carID);
+
+            $.ajax({
+                url: '{% url 'ajaxHcharts' %}',
+                data: JSON.stringify({    // JSON格式封装数据
+                    isInputQuery: isInputQuery,
+                    {#  判断是否为 管理员输入车牌号查询#}
+                    year: myYear,
+                    month: myMonth,
+                    carID: carID
+                    {#  若为管理员查询全部 或 用户查询，则carID为空字符串#}
+                }),
+                contentType: 'application/json',
+                type: "POST",
+                traditional: true,
+
+                success: function (callback) {
+                    var callback_dict = $.parseJSON(callback);
+                    var userCarNum = callback_dict['userCarNum'];
+
+                    if ("exist" in callback_dict) {
+                        alert("您输入的车牌号没有出入数据");
+                    }
+                    else {
+                        var d = callback_dict['data'];
+                        var xA = callback_dict['xA'];
+                        var Num = callback_dict['Num'];
+                        if (!isStaff) {
+                            Num = userCarNum
+                        }
+                        else if (!isInputQuery || Num === "") {
+                            Num = '总车辆';
+                        }
+
+                        var yearDict, monthDict;
+                        yearDict = {
+                            title: {
+                                text: xA['year'] + '年车辆年出入量',
+                                x: -30
+                            },
+                            subtitle: {
+                                text: '汕头大学交通管理系统',
+                                x: -30
+                            },
+                            xAxis: {
+                                categories: ['一月', '二月', '三月', '四月', '五月', '六月',
+                                    '七月', '八月', '九月', '十月', '十一月', '十二月']
+                            },
+                            yAxis: {
+                                allowDecimals: false,
+                                title: {
+                                    text: '车辆出入量(单位：次)'
+                                },
+                                plotLines: [{
+                                    value: 0,
+                                    width: 1,
+                                    color: '#808080'
+                                }]
+                            },
+                            tooltip: {
+                                valueSuffix: '次'
+                            },
+                            legend: {
+                                layout: 'vertical',
+                                align: 'right',
+                                verticalAlign: 'middle',
+                                borderWidth: 0
+                            },
+                            series: [{
+                                name: Num,
+                                data: d
+                            }],
+                            credits: {
+                                text: '汕头大学交通管理系统',
+                                href: 'http://127.0.0.1:8000/cars',
+                                style: {
+                                    cursor: 'pointer',
+                                    color: 'black',
+                                    fontSize: '12px'
+                                }
+                            }
+                        };
+
+                        monthDict = {
+                            title: {
+                                text: xA['year'] + '年' + xA['month'] + '月车辆月出入量',
+                                x: -30
+                            },
+                            subtitle: {
+                                text: '汕头大学交通管理系统',
+                                x: -30
+                            },
+                            xAxis: {
+                                categories: ['1号', '2号', '3号', '4号', '5号', '6号', '7号', '8号', '9号', '10号',
+                                    '11号', '12号', '13号', '14号', '15号', '16号', '17号', '18号', '19号', '20号',
+                                    '21号', '22号', '23号', '24号', '25号', '26号', '27号', '28号']
+                            },
+                            yAxis: {
+                                allowDecimals: false,
+                                title: {
+                                    text: '车辆出入量(单位：次)'
+                                },
+                                plotLines: [{
+                                    value: 0,
+                                    width: 1,
+                                    color: '#808080'
+                                }]
+                            },
+                            tooltip: {
+                                valueSuffix: '次'
+                            },
+                            legend: {
+                                layout: 'vertical',
+                                align: 'right',
+                                verticalAlign: 'middle',
+                                borderWidth: 0
+                            },
+                            series: [{
+                                name: Num,
+                                data: d
+                            }],
+                            credits: {
+                                text: '汕头大学交通管理系统',
+                                href: 'http://127.0.0.1:8000/cars',
+                                style: {
+                                    cursor: 'pointer',
+                                    color: 'black',
+                                    fontSize: '12px'
+                                }
+                            }
+                        };
+                        var month = xA['month'];
+                        if (month == 0) {
+                            while (yearDict.series[0].data.length > 12) {
+                                yearDict.series[0].data.pop();
+                            }
+                            Dict = yearDict;
+                            {#  查看年#}
+                        }
+                        else {
+
+                            if (month == 4 || month == 6 || month == 9 || month == 11) {
+                                monthDict.xAxis.categories.push('29号', '30号');
+                                while (monthDict.series[0].data.length > 30)
+                                    monthDict.series[0].data.pop();
+                            }
+                            else if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) {
+                                monthDict.xAxis.categories.push('29号', '30号', '31号');
+                                while (monthDict.series[0].data.length > 31)
+                                    monthDict.series[0].data.pop();
+                            }
+                            else if (xA['year'] % 400 == 0 || xA['year'] % 4 == 0 && xA['year'] % 100 !== 0) {
+                                monthDict.xAxis.categories.push('29号');
+                                while (monthDict.series[0].data.length > 29)
+                                    monthDict.series[0].data.pop();
+                            }
+                            else {
+                                while (monthDict.series[0].data.length > 28)
+                                    monthDict.series[0].data.pop();
+                            }
+                            Dict = monthDict;
+                            {# 查看月#}
+                        }
+                        var chart = new Highcharts.Chart('container', Dict);
+                    }
+                }
+            });
+        }
+
+
+    </script>
+
+    <div id="container" style="width: 1000px; height: 600px; margin: 10px auto;"></div>
+
+</div>
+
+</body>
+</html>

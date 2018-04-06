@@ -1,0 +1,162 @@
+<html>
+
+<head>
+    <meta charset="UTF-8"/>
+    <title>汕头大学交通管理系统</title>
+    {% load staticfiles %}
+    <script src="{% static 'mainpage/js/jquery.js' %}"></script>
+    <script src="{% static 'mainpage/js/highcharts.js' %}"></script>
+
+</head>
+
+<body>
+<div id="container" style="width: 1000px; height: 600px; margin: 0 auto">highcharts</div>
+
+<script type="text/javascript">
+    var d = {{ data | safe}};
+    var xA = {{ xA | safe}};
+    var Num = {{ Num | safe }};
+    {#    console.log(Num);#}
+    var yearDict, monthDict;
+
+
+    yearDict = {
+
+        title: {
+            text: xA['year'] + '年车辆年出入量',
+            x: -30
+        },
+        subtitle: {
+            text: '汕头大学交通管理系统',
+            x: -30
+        },
+        xAxis: {
+            categories: ['一月', '二月', '三月', '四月', '五月', '六月',
+                '七月', '八月', '九月', '十月', '十一月', '十二月']
+        },
+        yAxis: {
+            allowDecimals: false,
+            title: {
+                text: '车辆出入量(单位：次)'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            valueSuffix: '次'
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+        },
+        series: [{
+            name: Num[0],
+            data: d
+        }],
+        credits: {
+            text: '汕头大学交通管理系统',
+            href: 'http://www.stu.edu.cn',
+            style: {
+                cursor: 'pointer',
+                color: 'black',
+                fontSize: '10px'
+            }
+        }
+    };
+
+    monthDict = {
+
+        title: {
+            text: xA['year'] + '年' + xA['month'] + '月车辆月出入量',
+            x: -30
+        },
+        subtitle: {
+            text: '汕头大学交通管理系统',
+            x: -30
+        },
+        xAxis: {
+            categories: ['1号', '2号', '3号', '4号', '5号', '6号', '7号', '8号', '9号', '10号',
+                '11号', '12号', '13号', '14号', '15号', '16号', '17号', '18号', '19号', '20号',
+                '21号', '22号', '23号', '24号', '25号', '26号', '27号', '28号']
+        },
+        yAxis: {
+            allowDecimals: false,
+            title: {
+                text: '车辆出入量(单位：次)'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            valueSuffix: '次'
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+        },
+        series: [{
+            name: Num[0],
+            data: d
+        }],
+        credits: {
+            text: '汕头大学交通管理系统',
+            href: 'http://www.stu.edu.cn',
+            style: {
+                cursor: 'pointer',
+                color: 'black',
+                fontSize: '10px'
+            }
+        }
+    };
+    var month =xA['month'];
+    if (month !== 0) {
+
+        if ( month== 4 || month == 6 || month == 9 || month== 11) {
+            monthDict.xAxis.categories.push('29号', '30号');
+            while (monthDict.series[0].data.length > 30)
+                monthDict.series[0].data.pop();
+        }
+        else if (month == 1 || month == 3 ||month == 5 ||month == 7 || month== 8 || month == 10 || month== 12) {
+            monthDict.xAxis.categories.push('29号', '30号', '31号');
+            while (monthDict.series[0].data.length > 31)
+                monthDict.series[0].data.pop();
+        }
+        else if (xA['year'] % 400 == 0 || xA['year'] % 4 == 0 && xA['year'] % 100 !== 0) {
+            monthDict.xAxis.categories.push('29号');
+            while (monthDict.series[0].data.length > 29)
+                monthDict.series[0].data.pop();
+        }
+        else {
+            while (monthDict.series[0].data.length > 28)
+                monthDict.series[0].data.pop();
+        }
+
+        Dict = monthDict;
+        {# 查看月#}
+    }
+
+    else {
+        Dict = yearDict;
+        {#  查看年#}
+    }
+
+    var chart = new Highcharts.Chart('container', Dict);
+
+</script>
+
+</body>
+
+</html>
+
+
+

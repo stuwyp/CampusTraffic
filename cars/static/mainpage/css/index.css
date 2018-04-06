@@ -1,0 +1,208 @@
+@font-face {
+    font-family: myFont;
+    src: url(../../fonts/FZKangTi-S07S.TTF);
+}
+
+*, body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: rgba(235, 235, 235, 0.97);
+}
+
+/*.head{*/
+/*text-align:center;*/
+/*font-size:20px;*/
+/*font-family:myFont;*/
+/*}*/
+
+#top {
+    height:81px ;
+    width: 100%;
+    position: relative;
+    border-bottom: 1px;
+    background-color: rgba(244, 244, 244, 0.96);
+
+    /*vertical-align: middle;*/
+    /*border: 1px solid #b7edb4;*/
+    /*padding: 5px 20px;*/
+    /*opacity: 0.75;*/
+    /*height: 50px;*/
+    /*background: #b7edb4;*/
+    /*clear: right;*/
+
+}
+
+#stu {
+    width: 33.5%;
+    float: left;
+    height: 40px;
+    margin: 0 0 20px 1.5%;
+    padding: 1.5% 0  0 15%;
+    font-size: 30px;
+    /*!*line-height:1px;*!*/
+    vertical-align: middle;
+    /*text-align: center;*/
+
+    /*color: black;*/
+    font-family: myFont;
+
+}
+#button {
+    margin-right: 17%;
+    float: right;
+    width:33%;
+    height: 81px;
+    position: relative;
+    /*right: 20px;*/
+    /*margin: 20px;*/
+
+}
+
+
+.button {
+    margin-top:4.8%;
+    float: right;
+    display: inline;
+    height: auto;
+    width: auto;
+    background: transparent;
+    /*#b7edb4;*/
+    border: 0;
+    outline: none;
+    color: #484848;
+    text-align: center;
+    font-size: 22px;
+    font-family: myFont;
+    padding: 5px;
+    cursor: pointer;
+
+}
+
+#menu, #username {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+ #username {
+    margin:0 30px 10px 20px;
+}
+ .logoutBt{
+  margin: 4.8% 4.9% 0  0;
+ }
+
+.menuItem {
+    padding: 5px 0;
+    height: auto;
+    list-style: none;
+    text-align: center;
+}
+
+
+#registerbutton{
+
+}
+
+div #image {
+
+    position: relative;
+    top: 0;
+    width: 1000px;
+    margin: 50px auto;
+    height: 300px;
+
+}
+
+#img1 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    opacity: 0.5;
+    filter: alpha(opacity:50);
+
+}
+
+#img2 {
+    position: absolute;
+    top: 0;
+    left: 200px;
+    z-index: 1;
+    opacity: 1;
+
+}
+
+#img3 {
+    position: absolute;
+    top: 0;
+    left: 450px;
+    z-index: 0;
+    opacity: 0.5;
+
+}
+
+#img4 {
+    position: absolute;
+    top: 0;
+    left: 450px;
+    z-index: 0;
+    opacity: 0;
+
+}
+
+#container {
+    position: relative;
+    border: 1px solid #f5f7fb;
+    width: 1000px;
+    height: 800px;
+    margin: 20px auto;
+
+}
+
+#index_bottom {
+
+    position: relative;
+    width: 1000px;
+    margin: 80px auto;
+
+}
+
+#index_bottom div {
+
+    width: 200px;
+    margin: 50px auto;
+
+}
+
+#index_bottom a {
+
+    display: inline-block;
+    text-decoration: none;
+    color: #99c;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
